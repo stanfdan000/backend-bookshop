@@ -12,7 +12,7 @@ describe('test routes for books and authors', () => {
   
   it('/authors should display list of authors', async () => {
     const res = await request(app).get('/authors');
-  
+    console.log(res.body);
     expect(res.body).toEqual([
       {
         id: '1',
@@ -36,7 +36,7 @@ describe('test routes for books and authors', () => {
   
   it('authors/:id should return author details with books', async () => {
     const res = await request(app).get('/authors/1');
-    console.log(res.body);
+    console.log('res.body', res.body);
     expect(res.body).toEqual({
       name: 'tom lawyer',
       dob: '8-jun-1772',
@@ -44,27 +44,29 @@ describe('test routes for books and authors', () => {
       books: [
         {
           id: 1,
-          title: 'walking alone to the end',
-          released: 1800, 
+          released: '2000', 
+          title: 'ten buck two',
 
         }
       ],
     });
 
+  });
 
-    it('POST /authors should create a new author', async () => {
-      const res = await request(app).post('/authors').send({
-        name: 'rod brown',
-        dob: '2-oct-1975',
-        pob: 'boise, idaho'
-      });
-      expect(res.body.name).toBe('rod brown');
-      expect(res.body.dob).toBe('2-oct-1975');
-      expect(res.body.pob).toBe('boise idaho');
+  it('POST /authors should create a new author', async () => {
+    const res = await request(app).post('/authors').send({
+      name: 'rod brown',
+      dob: '2-oct-1975',
+      pob: 'boise, idaho'
     });
-    afterAll(() => {
-      pool.end();
-    });
+    console.log('cats', res.body);
+    expect(res.body.name).toBe('rod brown');
+    expect(res.body.dob).toBe('2-oct-1975');
+    expect(res.body.pob).toBe('boise, idaho');
+  });
+
+  afterAll(() => {
+    pool.end();
   });
   
 });
