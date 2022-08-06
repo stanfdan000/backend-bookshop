@@ -16,24 +16,24 @@ describe('test routes for books and authors', () => {
     expect(res.body).toEqual([
       {
         id: '1',
-        name: 'ten buck two',
-        released: 2000,
+        title: 'ten buck two',
+        released: '2000',
 
       },
       {
         id: '2',
-        name: 'crossoads',
-        released: 2001
+        title: 'crossroads',
+        released: '2001'
       },
       {
         id: '3',
-        name: 'wonders of electricity ',
-        released: 2002
+        title: 'wonders of electricity',
+        released: '2002'
       },
       {
         id: '4',
-        name: 'the book of shamless',
-        released: 2003
+        title: 'the book of shamless',
+        released: '2003'
       },
     ]);
   }); 
@@ -43,7 +43,7 @@ describe('test routes for books and authors', () => {
     const res = await request(app).get('/books/1');
     expect(res.body).toEqual({
       title: 'ten buck two',
-      released: 2000,
+      released: '2000',
       authors: [
         {
           id: 1,
@@ -53,21 +53,22 @@ describe('test routes for books and authors', () => {
         },
       ],
     });
-  
-  
-    it('POST /books should create a new books', async () => {
-      const resp = await request(app).post('/authors').send({
-        title: 'the story of the army man',
-        released: 1875
-      });
-      expect(resp.body.title).toBe('the story of the army man');
-      expect(resp.body.released).toBe(1875);
-      
-    });
-    afterAll(() => {
-      pool.end();
-    });
   });
-    
+  
+  it('POST /books should create a new books', async () => {
+    const resp = await request(app).post('/books').send({
+      title: 'the story of the army man',
+      released: '1875'
+    });
+    console.log(resp.body);
+    expect(resp.body.title).toBe('the story of the army man');
+    expect(resp.body.released).toBe('1875');
+      
+  });
+  
+  afterAll(() => {
+    pool.end();
+  });
+  
 }); 
 
